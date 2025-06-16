@@ -14,13 +14,422 @@ definition:
   schema:
     version: v0.1
     schema:
-      scalar_types: {}
-      object_types: {}
+      scalar_types:
+        Bool:
+          representation:
+            type: boolean
+          aggregate_functions: {}
+          comparison_operators: {}
+        Int:
+          representation:
+            type: int32
+          aggregate_functions: {}
+          comparison_operators: {}
+        String:
+          representation:
+            type: string
+          aggregate_functions: {}
+          comparison_operators: {}
+      object_types:
+        header:
+          description: A header in an email
+          fields:
+            name:
+              description: The name of the header
+              type:
+                name: String
+                type: named
+            value:
+              description: The value of the header
+              type:
+                name: String
+                type: named
+        list_template_item:
+          description: The response properties for listing transactional templates
+          fields:
+            generation:
+              description: Defines the generation of the template.
+              type:
+                name: String
+                type: named
+            id:
+              description: The ID of the transactional template.
+              type:
+                name: String
+                type: named
+            name:
+              description: The name for the transactional template.
+              type:
+                name: String
+                type: named
+            updated_at:
+              description: The date and time that this transactional template version was updated
+              type:
+                name: String
+                type: named
+            versions:
+              description: The date and time that this transactional template version was updated
+              type:
+                element_type:
+                  name: list_template_version
+                  type: named
+                type: array
+        list_template_version:
+          description: The response properties for listing transactional templates
+          fields:
+            active:
+              description: Set the version as the active version associated with the template. Only one version of a template can be active. The first version created for a template will automatically be set to Active.
+              type:
+                name: Int
+                type: named
+            editor:
+              description: 'The editor used in the UI. Allowed Values: code, design'
+              type:
+                name: String
+                type: named
+            generate_plain_content:
+              description: If true, plain_content is always generated from html_content. If false, plain_content is not altered.
+              type:
+                name: Bool
+                type: named
+            id:
+              description: ID of the transactional template version.
+              type:
+                name: String
+                type: named
+            name:
+              description: Name of the transactional template version.
+              type:
+                name: String
+                type: named
+            subject:
+              description: Subject of the new transactional template version.
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            template_id:
+              description: ID of the transactional template.
+              type:
+                name: String
+                type: named
+            thumbnail_url:
+              description: A Thumbnail preview of the template's html content.
+              type:
+                name: String
+                type: named
+            updated_at:
+              description: The date and time that this transactional template version was updated.
+              type:
+                name: String
+                type: named
+        mail_address:
+          description: An email address
+          fields:
+            email:
+              description: The recipient's email address
+              type:
+                name: String
+                type: named
+            name:
+              description: The recipient's name
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+        mail_attachment:
+          description: An attachment to an email
+          fields:
+            content:
+              description: The Base64 encoded content of the attachment.
+              type:
+                name: String
+                type: named
+            content_id:
+              description: The attachment's content ID. This is used when the disposition is set to “inline” and the attachment is an image, allowing the file to be displayed within the body of your email.
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            disposition:
+              description: The attachment's content-disposition, specifying how you would like the attachment to be displayed. For example, “inline” results in the attached file are displayed automatically within the message while “attachment” results in the attached file require some action to be taken before it is displayed, such as opening or downloading the file.
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            filename:
+              description: The attachment's filename.
+              type:
+                name: String
+                type: named
+            type:
+              description: The MIME type of the content you are attaching.
+              type:
+                name: String
+                type: named
+        mail_content:
+          description: Content of an email in a particular MIME format
+          fields:
+            name:
+              description: The actual content of the specified MIME type that you are including in your email.
+              type:
+                name: String
+                type: named
+            type:
+              description: The MIME type of the content you are including in your email
+              type:
+                name: String
+                type: named
+        mail_personalization:
+          description: A personalization can be thought of as an envelope - it defines who should receive an individual message and how that message should be handled.
+          fields:
+            bcc:
+              description: An array of addresses that will be bcced the email.
+              type:
+                type: nullable
+                underlying_type:
+                  element_type:
+                    name: mail_address
+                    type: named
+                  type: array
+            cc:
+              description: An array of addresses that will be cced the email.
+              type:
+                element_type:
+                  name: mail_address
+                  type: named
+                type: array
+            dynamic_template_data:
+              description: A collection of dynamic template variable name/value to insert pairs.
+              type:
+                type: nullable
+                underlying_type:
+                  element_type:
+                    name: template_variable
+                    type: named
+                  type: array
+            from:
+              description: The 'From' email address used to deliver the message. This address should be a verified sender in your Twilio SendGrid account.
+              type:
+                type: nullable
+                underlying_type:
+                  name: mail_address
+                  type: named
+            headers:
+              description: 'A collection of headers allowing you to specify handling instructions for your email. You may not overwrite the following headers: x-sg-id, x-sg-eid, received, dkim-signature, Content-Type, Content-Transfer-Encoding, To, From, Subject, Reply-To, CC, BCC.'
+              type:
+                type: nullable
+                underlying_type:
+                  element_type:
+                    name: header
+                    type: named
+                  type: array
+            send_at:
+              description: A unix timestamp allowing you to specify when your email should be delivered. Scheduling delivery more than 72 hours in advance is forbidden.
+              type:
+                type: nullable
+                underlying_type:
+                  name: Int
+                  type: named
+            subject:
+              description: The subject of your email. See character length requirements according to RFC 2822.
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            substitutions:
+              description: Substitutions allow you to insert data without using Dynamic Transactional Templates.
+              type:
+                type: nullable
+                underlying_type:
+                  element_type:
+                    name: substitution
+                    type: named
+                  type: array
+            to:
+              description: An array of addresses that will be sent the email.
+              type:
+                type: nullable
+                underlying_type:
+                  element_type:
+                    name: mail_address
+                    type: named
+                  type: array
+        send_mail_response:
+          description: The response from a mail send request.
+          fields:
+            batch_id:
+              description: The batch ID used with the send mail request.
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+        substitution:
+          description: A substitution value
+          fields:
+            tag:
+              description: The substitution tag
+              type:
+                name: String
+                type: named
+            value:
+              description: The value to substitute for the tag
+              type:
+                name: String
+                type: named
+        template_variable:
+          description: A dynamic template variable value
+          fields:
+            value:
+              description: The value to substitute for the variable
+              type:
+                name: String
+                type: named
+            variable:
+              description: The dynamic template variable name
+              type:
+                name: String
+                type: named
+        unsubscription_settings:
+          description: An object allowing you to specify how to handle unsubscribes.
+          fields:
+            group_id:
+              description: The unsubscribe group to associate with this email.
+              type:
+                name: Int
+                type: named
+            groups_to_display:
+              description: An array containing the unsubscribe groups that you would like to be displayed on the unsubscribe preferences page.
+              type:
+                type: nullable
+                underlying_type:
+                  element_type:
+                    name: Int
+                    type: named
+                  type: array
       collections: []
-      functions: []
-      procedures: []
+      functions:
+        - name: list_templates
+          description: allows you to retrieve all transactional templates
+          arguments:
+            generations:
+              description: Comma-delimited list specifying which generations of templates to return. Options are legacy, dynamic or legacy,dynamic
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            page_size:
+              description: The number of templates to be returned in each page of results
+              type:
+                name: Int
+                type: named
+            page_token:
+              description: A token corresponding to a specific page of results, as provided by metadata
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+          result_type:
+            element_type:
+              name: list_template_item
+              type: named
+            type: array
+      procedures:
+        - name: send_mail
+          description: Allows you to send email
+          arguments:
+            asm:
+              description: An object allowing you to specify how to handle unsubscribes.
+              type:
+                type: nullable
+                underlying_type:
+                  name: unsubscription_settings
+                  type: named
+            attachments:
+              description: An array of objects where you can specify any attachments you want to include.
+              type:
+                type: nullable
+                underlying_type:
+                  element_type:
+                    name: mail_attachment
+                    type: named
+                  type: array
+            batch_id:
+              description: An ID representing a batch of emails to be sent at the same time. Including a batch_id in your request allows you include this email in that batch. It also enables you to cancel or pause the delivery of that batch.
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            content:
+              description: An array where you can specify the content of your email. You can include multiple MIME types of content, but you must specify at least one MIME type.
+              type:
+                element_type:
+                  name: mail_content
+                  type: named
+                type: array
+            from:
+              description: The 'From' email address used to deliver the message. This address should be a verified sender in your Twilio SendGrid account.
+              type:
+                name: mail_address
+                type: named
+            headers:
+              description: The headers to put on the mail. You must ensure these are properly encoded if they contain unicode characters. These headers cannot be one of the reserved headers.
+              type:
+                type: nullable
+                underlying_type:
+                  element_type:
+                    name: header
+                    type: named
+                  type: array
+            personalizations:
+              description: An array of messages and their metadata. Each object within personalizations can be thought of as an envelope - it defines who should receive an individual message and how that message should be handled.
+              type:
+                element_type:
+                  name: mail_personalization
+                  type: named
+                type: array
+            reply_to_list:
+              description: An array of recipients who will receive replies.
+              type:
+                element_type:
+                  name: mail_address
+                  type: named
+                type: array
+            send_at:
+              description: A unix timestamp allowing you to specify when you want your email to be delivered. This may be overridden by the send_at parameter set at the personalizations level. Delivery cannot be scheduled more than 72 hours in advance.
+              type:
+                type: nullable
+                underlying_type:
+                  name: Int
+                  type: named
+            subject:
+              description: The global or 'message level' subject of your email. This may be overridden by subject lines set in personalizations.
+              type:
+                name: String
+                type: named
+            template_id:
+              description: An email template ID. A template that contains a subject and content — either text or html — will override any subject and content values specified at the personalizations or message level.
+              type:
+                type: nullable
+                underlying_type:
+                  name: Bool
+                  type: named
+          result_type:
+            name: send_mail_response
+            type: named
     capabilities:
-      version: ""
+      version: 0.1.6
       capabilities:
-        query: {}
+        query:
+          nested_fields: {}
+          exists: {}
         mutation: {}
