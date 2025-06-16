@@ -79,7 +79,9 @@ definition:
           booleanExpressionType: Int4BoolExp
         - fieldName: updatedAt
           booleanExpressionType: TimestamptzBoolExp
-      comparableRelationships: []
+      comparableRelationships:
+        - relationshipName: cart
+        - relationshipName: product
   logicalOperators:
     enable: true
   isNull:
@@ -134,7 +136,9 @@ definition:
           orderByExpression: Int32OrderByExp
         - fieldName: updatedAt
           orderByExpression: TimestamptzOrderByExp
-      orderableRelationships: []
+      orderableRelationships:
+        - relationshipName: cart
+        - relationshipName: product
   graphql:
     expressionTypeName: CartItemsOrderByExp
 
@@ -177,4 +181,40 @@ definition:
       select:
         filter: null
         allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: cart
+  sourceType: CartItems
+  target:
+    model:
+      name: Carts
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: cartId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: product
+  sourceType: CartItems
+  target:
+    model:
+      name: Products
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
 

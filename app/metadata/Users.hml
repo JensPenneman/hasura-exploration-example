@@ -103,7 +103,12 @@ definition:
           booleanExpressionType: TextBoolExp
         - fieldName: updatedAt
           booleanExpressionType: TimestamptzBoolExp
-      comparableRelationships: []
+      comparableRelationships:
+        - relationshipName: carts
+        - relationshipName: coupons
+        - relationshipName: notifications
+        - relationshipName: orders
+        - relationshipName: reviews
   logicalOperators:
     enable: true
   isNull:
@@ -213,4 +218,114 @@ definition:
       select:
         filter: null
         allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: carts
+  sourceType: Users
+  target:
+    model:
+      name: Carts
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: CartsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: cartsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: coupons
+  sourceType: Users
+  target:
+    model:
+      name: Coupons
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: CouponsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: couponsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: notifications
+  sourceType: Users
+  target:
+    model:
+      name: Notifications
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: NotificationsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: notificationsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orders
+  sourceType: Users
+  target:
+    model:
+      name: Orders
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrdersAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: ordersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: reviews
+  sourceType: Users
+  target:
+    model:
+      name: Reviews
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: ReviewsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: reviewsAggregate
 

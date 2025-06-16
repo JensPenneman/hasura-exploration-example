@@ -95,7 +95,8 @@ definition:
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: userId
           booleanExpressionType: UuidBoolExp
-      comparableRelationships: []
+      comparableRelationships:
+        - relationshipName: user
   logicalOperators:
     enable: true
   isNull:
@@ -158,7 +159,8 @@ definition:
           orderByExpression: TimestamptzOrderByExp
         - fieldName: userId
           orderByExpression: UuidOrderByExp
-      orderableRelationships: []
+      orderableRelationships:
+        - relationshipName: user
   graphql:
     expressionTypeName: CouponsOrderByExp
 
@@ -201,4 +203,22 @@ definition:
       select:
         filter: null
         allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: user
+  sourceType: Coupons
+  target:
+    model:
+      name: Users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
 

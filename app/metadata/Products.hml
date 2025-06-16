@@ -119,7 +119,12 @@ definition:
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: vector
           booleanExpressionType: VectorBoolExp
-      comparableRelationships: []
+      comparableRelationships:
+        - relationshipName: cartItems
+        - relationshipName: orders
+        - relationshipName: category
+        - relationshipName: manufacturer
+        - relationshipName: reviews
   logicalOperators:
     enable: true
   isNull:
@@ -194,7 +199,9 @@ definition:
           orderByExpression: TimestamptzOrderByExp
         - fieldName: vector
           orderByExpression: VectorOrderByExp
-      orderableRelationships: []
+      orderableRelationships:
+        - relationshipName: category
+        - relationshipName: manufacturer
   graphql:
     expressionTypeName: ProductsOrderByExp
 
@@ -237,4 +244,106 @@ definition:
       select:
         filter: null
         allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: cartItems
+  sourceType: Products
+  target:
+    model:
+      name: CartItems
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: CartItemsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+  graphql:
+    aggregateFieldName: cartItemsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orders
+  sourceType: Products
+  target:
+    model:
+      name: Orders
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrdersAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+  graphql:
+    aggregateFieldName: ordersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: category
+  sourceType: Products
+  target:
+    model:
+      name: Categories
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: categoryId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: manufacturer
+  sourceType: Products
+  target:
+    model:
+      name: Manufacturers
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: manufacturerId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: reviews
+  sourceType: Products
+  target:
+    model:
+      name: Reviews
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: ReviewsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+  graphql:
+    aggregateFieldName: reviewsAggregate
 
