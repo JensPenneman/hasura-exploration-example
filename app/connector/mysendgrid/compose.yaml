@@ -1,0 +1,14 @@
+services:
+  app_mysendgrid:
+    build:
+      context: .
+      dockerfile: .hasura-connector/Dockerfile.mysendgrid
+    environment:
+      HASURA_SERVICE_TOKEN_SECRET: $APP_MYSENDGRID_HASURA_SERVICE_TOKEN_SECRET
+      OTEL_EXPORTER_OTLP_ENDPOINT: $APP_MYSENDGRID_OTEL_EXPORTER_OTLP_ENDPOINT
+      OTEL_SERVICE_NAME: $APP_MYSENDGRID_OTEL_SERVICE_NAME
+      SENDGRID_API_KEY: $APP_MYSENDGRID_SENDGRID_API_KEY
+    extra_hosts:
+      - local.hasura.dev:host-gateway
+    ports:
+      - 9304:8080

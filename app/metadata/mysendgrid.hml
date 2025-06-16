@@ -1,0 +1,26 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: mysendgrid
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: APP_MYSENDGRID_READ_URL
+      write:
+        valueFromEnv: APP_MYSENDGRID_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: APP_MYSENDGRID_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      scalar_types: {}
+      object_types: {}
+      collections: []
+      functions: []
+      procedures: []
+    capabilities:
+      version: ""
+      capabilities:
+        query: {}
+        mutation: {}

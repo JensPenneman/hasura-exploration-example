@@ -1,0 +1,13 @@
+packagingDefinition:
+  type: PrebuiltDockerImage
+  dockerImage: ghcr.io/hasura/ndc-sendgrid:v0.6.0
+supportedEnvironmentVariables:
+  - name: SENDGRID_API_KEY
+    description: The SendGrid API key to use
+    required: true
+commands: {}
+dockerComposeWatch:
+  - path: ./
+    action: sync+restart
+    target: /etc/connector
+documentationPage: https://hasura.info/sendgrid-getting-started

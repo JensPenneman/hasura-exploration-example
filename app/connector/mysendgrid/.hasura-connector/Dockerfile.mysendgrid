@@ -1,0 +1,2 @@
+FROM ghcr.io/hasura/ndc-sendgrid:v0.6.0
+COPY ./ /etc/connector
