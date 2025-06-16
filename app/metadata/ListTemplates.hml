@@ -1,0 +1,191 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ListTemplateVersion
+  description: The response properties for listing transactional templates
+  fields:
+    - name: active
+      type: Int!
+      description: Set the version as the active version associated with the template.
+        Only one version of a template can be active. The first version created
+        for a template will automatically be set to Active.
+    - name: editor
+      type: String!
+      description: "The editor used in the UI. Allowed Values: code, design"
+    - name: generatePlainContent
+      type: Boolean_1!
+      description: If true, plain_content is always generated from html_content. If
+        false, plain_content is not altered.
+    - name: id
+      type: String!
+      description: ID of the transactional template version.
+    - name: name
+      type: String!
+      description: Name of the transactional template version.
+    - name: subject
+      type: String
+      description: Subject of the new transactional template version.
+    - name: templateId
+      type: String!
+      description: ID of the transactional template.
+    - name: thumbnailUrl
+      type: String!
+      description: A Thumbnail preview of the template's html content.
+    - name: updatedAt
+      type: String!
+      description: The date and time that this transactional template version was updated.
+  graphql:
+    typeName: ListTemplateVersion
+    inputTypeName: ListTemplateVersionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: list_template_version
+      fieldMapping:
+        active:
+          column:
+            name: active
+        editor:
+          column:
+            name: editor
+        generatePlainContent:
+          column:
+            name: generate_plain_content
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        subject:
+          column:
+            name: subject
+        templateId:
+          column:
+            name: template_id
+        thumbnailUrl:
+          column:
+            name: thumbnail_url
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ListTemplateVersion
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - active
+          - editor
+          - generatePlainContent
+          - id
+          - name
+          - subject
+          - templateId
+          - thumbnailUrl
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ListTemplateItem
+  description: The response properties for listing transactional templates
+  fields:
+    - name: generation
+      type: String!
+      description: Defines the generation of the template.
+    - name: id
+      type: String!
+      description: The ID of the transactional template.
+    - name: name
+      type: String!
+      description: The name for the transactional template.
+    - name: updatedAt
+      type: String!
+      description: The date and time that this transactional template version was updated
+    - name: versions
+      type: "[ListTemplateVersion!]!"
+      description: The date and time that this transactional template version was updated
+  graphql:
+    typeName: ListTemplateItem
+    inputTypeName: ListTemplateItemInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: list_template_item
+      fieldMapping:
+        generation:
+          column:
+            name: generation
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        updatedAt:
+          column:
+            name: updated_at
+        versions:
+          column:
+            name: versions
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ListTemplateItem
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - generation
+          - id
+          - name
+          - updatedAt
+          - versions
+
+---
+kind: Command
+version: v1
+definition:
+  name: ListTemplates
+  outputType: "[ListTemplateItem!]!"
+  arguments:
+    - name: generations
+      type: String
+      description: Comma-delimited list specifying which generations of templates to
+        return. Options are legacy, dynamic or legacy,dynamic
+    - name: pageSize
+      type: Int!
+      description: The number of templates to be returned in each page of results
+    - name: pageToken
+      type: String
+      description: A token corresponding to a specific page of results, as provided by
+        metadata
+  source:
+    dataConnectorName: mysendgrid
+    dataConnectorCommand:
+      function: list_templates
+    argumentMapping:
+      generations: generations
+      pageSize: page_size
+      pageToken: page_token
+  graphql:
+    rootFieldName: listTemplates
+    rootFieldKind: Query
+  description: allows you to retrieve all transactional templates
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: ListTemplates
+  permissions:
+    - role: admin
+      allowExecution: true
+

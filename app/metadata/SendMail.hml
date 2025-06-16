@@ -1,0 +1,484 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UnsubscriptionSettings
+  description: An object allowing you to specify how to handle unsubscribes.
+  fields:
+    - name: groupId
+      type: Int!
+      description: The unsubscribe group to associate with this email.
+    - name: groupsToDisplay
+      type: "[Int!]"
+      description: An array containing the unsubscribe groups that you would like to
+        be displayed on the unsubscribe preferences page.
+  graphql:
+    typeName: UnsubscriptionSettings
+    inputTypeName: UnsubscriptionSettingsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: unsubscription_settings
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        groupsToDisplay:
+          column:
+            name: groups_to_display
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UnsubscriptionSettings
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - groupsToDisplay
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: MailAttachment
+  description: An attachment to an email
+  fields:
+    - name: content
+      type: String!
+      description: The Base64 encoded content of the attachment.
+    - name: contentId
+      type: String
+      description: The attachment's content ID. This is used when the disposition is
+        set to “inline” and the attachment is an image, allowing the file to be
+        displayed within the body of your email.
+    - name: disposition
+      type: String
+      description: The attachment's content-disposition, specifying how you would like
+        the attachment to be displayed. For example, “inline” results in the
+        attached file are displayed automatically within the message while
+        “attachment” results in the attached file require some action to be
+        taken before it is displayed, such as opening or downloading the file.
+    - name: filename
+      type: String!
+      description: The attachment's filename.
+    - name: type
+      type: String!
+      description: The MIME type of the content you are attaching.
+  graphql:
+    typeName: MailAttachment
+    inputTypeName: MailAttachmentInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: mail_attachment
+      fieldMapping:
+        content:
+          column:
+            name: content
+        contentId:
+          column:
+            name: content_id
+        disposition:
+          column:
+            name: disposition
+        filename:
+          column:
+            name: filename
+        type:
+          column:
+            name: type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: MailAttachment
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - content
+          - contentId
+          - disposition
+          - filename
+          - type
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: MailContent
+  description: Content of an email in a particular MIME format
+  fields:
+    - name: name
+      type: String!
+      description: The actual content of the specified MIME type that you are
+        including in your email.
+    - name: type
+      type: String!
+      description: The MIME type of the content you are including in your email
+  graphql:
+    typeName: MailContent
+    inputTypeName: MailContentInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: mail_content
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: MailContent
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - type
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: MailAddress
+  description: An email address
+  fields:
+    - name: email
+      type: String!
+      description: The recipient's email address
+    - name: name
+      type: String
+      description: The recipient's name
+  graphql:
+    typeName: MailAddress
+    inputTypeName: MailAddressInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: mail_address
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: MailAddress
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - email
+          - name
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Header
+  description: A header in an email
+  fields:
+    - name: name
+      type: String!
+      description: The name of the header
+    - name: value
+      type: String!
+      description: The value of the header
+  graphql:
+    typeName: Header
+    inputTypeName: HeaderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: header
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Header
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: TemplateVariable
+  description: A dynamic template variable value
+  fields:
+    - name: value
+      type: String!
+      description: The value to substitute for the variable
+    - name: variable
+      type: String!
+      description: The dynamic template variable name
+  graphql:
+    typeName: TemplateVariable
+    inputTypeName: TemplateVariableInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: template_variable
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: TemplateVariable
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - value
+          - variable
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Substitution
+  description: A substitution value
+  fields:
+    - name: tag
+      type: String!
+      description: The substitution tag
+    - name: value
+      type: String!
+      description: The value to substitute for the tag
+  graphql:
+    typeName: Substitution
+    inputTypeName: SubstitutionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: substitution
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Substitution
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - tag
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: MailPersonalization
+  description: A personalization can be thought of as an envelope - it defines who
+    should receive an individual message and how that message should be handled.
+  fields:
+    - name: bcc
+      type: "[MailAddress!]"
+      description: An array of addresses that will be bcced the email.
+    - name: cc
+      type: "[MailAddress!]!"
+      description: An array of addresses that will be cced the email.
+    - name: dynamicTemplateData
+      type: "[TemplateVariable!]"
+      description: A collection of dynamic template variable name/value to insert pairs.
+    - name: from
+      type: MailAddress
+      description: The 'From' email address used to deliver the message. This address
+        should be a verified sender in your Twilio SendGrid account.
+    - name: headers
+      type: "[Header!]"
+      description: "A collection of headers allowing you to specify handling
+        instructions for your email. You may not overwrite the following
+        headers: x-sg-id, x-sg-eid, received, dkim-signature, Content-Type,
+        Content-Transfer-Encoding, To, From, Subject, Reply-To, CC, BCC."
+    - name: sendAt
+      type: Int
+      description: A unix timestamp allowing you to specify when your email should be
+        delivered. Scheduling delivery more than 72 hours in advance is
+        forbidden.
+    - name: subject
+      type: String
+      description: The subject of your email. See character length requirements
+        according to RFC 2822.
+    - name: substitutions
+      type: "[Substitution!]"
+      description: Substitutions allow you to insert data without using Dynamic
+        Transactional Templates.
+    - name: to
+      type: "[MailAddress!]"
+      description: An array of addresses that will be sent the email.
+  graphql:
+    typeName: MailPersonalization
+    inputTypeName: MailPersonalizationInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: mail_personalization
+      fieldMapping:
+        bcc:
+          column:
+            name: bcc
+        cc:
+          column:
+            name: cc
+        dynamicTemplateData:
+          column:
+            name: dynamic_template_data
+        from:
+          column:
+            name: from
+        headers:
+          column:
+            name: headers
+        sendAt:
+          column:
+            name: send_at
+        subject:
+          column:
+            name: subject
+        substitutions:
+          column:
+            name: substitutions
+        to:
+          column:
+            name: to
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: MailPersonalization
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - bcc
+          - cc
+          - dynamicTemplateData
+          - from
+          - headers
+          - sendAt
+          - subject
+          - substitutions
+          - to
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: SendMailResponse
+  description: The response from a mail send request.
+  fields:
+    - name: batchId
+      type: String
+      description: The batch ID used with the send mail request.
+  graphql:
+    typeName: SendMailResponse
+    inputTypeName: SendMailResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: mysendgrid
+      dataConnectorObjectType: send_mail_response
+      fieldMapping:
+        batchId:
+          column:
+            name: batch_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: SendMailResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - batchId
+
+---
+kind: Command
+version: v1
+definition:
+  name: SendMail
+  outputType: SendMailResponse!
+  arguments:
+    - name: asm
+      type: UnsubscriptionSettings
+      description: An object allowing you to specify how to handle unsubscribes.
+    - name: attachments
+      type: "[MailAttachment!]"
+      description: An array of objects where you can specify any attachments you want
+        to include.
+    - name: batchId
+      type: String
+      description: An ID representing a batch of emails to be sent at the same time.
+        Including a batch_id in your request allows you include this email in
+        that batch. It also enables you to cancel or pause the delivery of that
+        batch.
+    - name: content
+      type: "[MailContent!]!"
+      description: An array where you can specify the content of your email. You can
+        include multiple MIME types of content, but you must specify at least
+        one MIME type.
+    - name: from
+      type: MailAddress!
+      description: The 'From' email address used to deliver the message. This address
+        should be a verified sender in your Twilio SendGrid account.
+    - name: headers
+      type: "[Header!]"
+      description: The headers to put on the mail. You must ensure these are properly
+        encoded if they contain unicode characters. These headers cannot be one
+        of the reserved headers.
+    - name: personalizations
+      type: "[MailPersonalization!]!"
+      description: An array of messages and their metadata. Each object within
+        personalizations can be thought of as an envelope - it defines who
+        should receive an individual message and how that message should be
+        handled.
+    - name: replyToList
+      type: "[MailAddress!]!"
+      description: An array of recipients who will receive replies.
+    - name: sendAt
+      type: Int
+      description: A unix timestamp allowing you to specify when you want your email
+        to be delivered. This may be overridden by the send_at parameter set at
+        the personalizations level. Delivery cannot be scheduled more than 72
+        hours in advance.
+    - name: subject
+      type: String!
+      description: The global or 'message level' subject of your email. This may be
+        overridden by subject lines set in personalizations.
+    - name: templateId
+      type: Boolean_1
+      description: An email template ID. A template that contains a subject and
+        content — either text or html — will override any subject and content
+        values specified at the personalizations or message level.
+  source:
+    dataConnectorName: mysendgrid
+    dataConnectorCommand:
+      procedure: send_mail
+    argumentMapping:
+      asm: asm
+      attachments: attachments
+      batchId: batch_id
+      content: content
+      from: from
+      headers: headers
+      personalizations: personalizations
+      replyToList: reply_to_list
+      sendAt: send_at
+      subject: subject
+      templateId: template_id
+  graphql:
+    rootFieldName: sendMail
+    rootFieldKind: Mutation
+  description: Allows you to send email
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: SendMail
+  permissions:
+    - role: admin
+      allowExecution: true
+

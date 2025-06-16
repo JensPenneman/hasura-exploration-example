@@ -1,0 +1,50 @@
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: mysendgrid
+  dataConnectorScalarType: String
+  representation: String
+  graphql:
+    comparisonExpressionTypeName: StringComparisonExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: mysendgrid
+  dataConnectorScalarType: Int
+  representation: Int
+  graphql:
+    comparisonExpressionTypeName: IntComparisonExp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: BoolBoolExp_1
+  operand:
+    scalar:
+      type: Boolean_1
+      comparisonOperators: []
+      dataConnectorOperatorMapping:
+        - dataConnectorName: mysendgrid
+          dataConnectorScalarType: Bool
+          operatorMapping: {}
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: BoolBoolExp1
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: mysendgrid
+  dataConnectorScalarType: Bool
+  representation: Boolean_1
+  graphql:
+    comparisonExpressionTypeName: Boolean1ComparisonExp_1
+
