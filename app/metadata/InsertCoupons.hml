@@ -1,0 +1,144 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertCouponsObject
+  fields:
+    - name: amount
+      type: Int32
+    - name: code
+      type: String_1!
+    - name: createdAt
+      type: Timestamptz
+    - name: expirationDate
+      type: Timestamptz!
+    - name: id
+      type: Uuid
+    - name: percentOrValue
+      type: String_1
+    - name: updatedAt
+      type: Timestamptz
+    - name: userId
+      type: Uuid!
+  graphql:
+    typeName: InsertCouponsObject
+    inputTypeName: InsertCouponsObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_coupons_object
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        code:
+          column:
+            name: code
+        createdAt:
+          column:
+            name: created_at
+        expirationDate:
+          column:
+            name: expiration_date
+        id:
+          column:
+            name: id
+        percentOrValue:
+          column:
+            name: percent_or_value
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertCouponsObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - code
+          - createdAt
+          - expirationDate
+          - id
+          - percentOrValue
+          - updatedAt
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertCouponsResponse
+  description: Responses from the 'insert_coupons' procedure
+  fields:
+    - name: affectedRows
+      type: Int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Coupons!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertCouponsResponse
+    inputTypeName: InsertCouponsResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_coupons_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertCouponsResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertCoupons
+  outputType: InsertCouponsResponse!
+  arguments:
+    - name: objects
+      type: "[InsertCouponsObject!]!"
+    - name: postCheck
+      type: CouponsBoolExp
+      description: Insert permission predicate over the 'coupons' collection
+  source:
+    dataConnectorName: my_connector
+    dataConnectorCommand:
+      procedure: insert_coupons
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertCoupons
+    rootFieldKind: Mutation
+  description: Insert into the coupons table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertCoupons
+  permissions:
+    - role: admin
+      allowExecution: true
+

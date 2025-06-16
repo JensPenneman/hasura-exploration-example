@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteManufacturersByIdResponse
+  description: Responses from the 'delete_manufacturers_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Manufacturers!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteManufacturersByIdResponse
+    inputTypeName: DeleteManufacturersByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: delete_manufacturers_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteManufacturersByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteManufacturersById
+  outputType: DeleteManufacturersByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: preCheck
+      type: ManufacturersBoolExp
+      description: Delete permission predicate over the 'manufacturers' collection
+  source:
+    dataConnectorName: my_connector
+    dataConnectorCommand:
+      procedure: delete_manufacturers_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteManufacturersById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'manufacturers' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteManufacturersById
+  permissions:
+    - role: admin
+      allowExecution: true
+

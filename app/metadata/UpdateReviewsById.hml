@@ -1,0 +1,416 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnReviewsCreatedAt
+  description: Update the 'created_at' column in the 'reviews' collection
+  fields:
+    - name: set
+      type: Timestamptz!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnReviewsCreatedAt
+    inputTypeName: UpdateColumnReviewsCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_reviews_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnReviewsCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnReviewsId
+  description: Update the 'id' column in the 'reviews' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnReviewsId
+    inputTypeName: UpdateColumnReviewsIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_reviews_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnReviewsId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnReviewsIsVisible
+  description: Update the 'is_visible' column in the 'reviews' collection
+  fields:
+    - name: set
+      type: Boolean_1!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnReviewsIsVisible
+    inputTypeName: UpdateColumnReviewsIsVisibleInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_reviews_is_visible
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnReviewsIsVisible
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnReviewsProductId
+  description: Update the 'product_id' column in the 'reviews' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnReviewsProductId
+    inputTypeName: UpdateColumnReviewsProductIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_reviews_product_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnReviewsProductId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnReviewsRating
+  description: Update the 'rating' column in the 'reviews' collection
+  fields:
+    - name: set
+      type: Int32!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnReviewsRating
+    inputTypeName: UpdateColumnReviewsRatingInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_reviews_rating
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnReviewsRating
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnReviewsText
+  description: Update the 'text' column in the 'reviews' collection
+  fields:
+    - name: set
+      type: String_1!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnReviewsText
+    inputTypeName: UpdateColumnReviewsTextInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_reviews_text
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnReviewsText
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnReviewsUpdatedAt
+  description: Update the 'updated_at' column in the 'reviews' collection
+  fields:
+    - name: set
+      type: Timestamptz!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnReviewsUpdatedAt
+    inputTypeName: UpdateColumnReviewsUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_reviews_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnReviewsUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnReviewsUserId
+  description: Update the 'user_id' column in the 'reviews' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnReviewsUserId
+    inputTypeName: UpdateColumnReviewsUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_reviews_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnReviewsUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateReviewsByIdUpdateColumns
+  description: Update the columns of the 'reviews' collection
+  fields:
+    - name: createdAt
+      type: UpdateColumnReviewsCreatedAt
+      description: Update the 'created_at' column in the 'reviews' collection.
+    - name: id
+      type: UpdateColumnReviewsId
+      description: Update the 'id' column in the 'reviews' collection.
+    - name: isVisible
+      type: UpdateColumnReviewsIsVisible
+      description: Update the 'is_visible' column in the 'reviews' collection.
+    - name: productId
+      type: UpdateColumnReviewsProductId
+      description: Update the 'product_id' column in the 'reviews' collection.
+    - name: rating
+      type: UpdateColumnReviewsRating
+      description: Update the 'rating' column in the 'reviews' collection.
+    - name: text
+      type: UpdateColumnReviewsText
+      description: Update the 'text' column in the 'reviews' collection.
+    - name: updatedAt
+      type: UpdateColumnReviewsUpdatedAt
+      description: Update the 'updated_at' column in the 'reviews' collection.
+    - name: userId
+      type: UpdateColumnReviewsUserId
+      description: Update the 'user_id' column in the 'reviews' collection.
+  graphql:
+    typeName: UpdateReviewsByIdUpdateColumns
+    inputTypeName: UpdateReviewsByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_reviews_by_id_update_columns
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        isVisible:
+          column:
+            name: is_visible
+        productId:
+          column:
+            name: product_id
+        rating:
+          column:
+            name: rating
+        text:
+          column:
+            name: text
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateReviewsByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - isVisible
+          - productId
+          - rating
+          - text
+          - updatedAt
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateReviewsByIdResponse
+  description: Responses from the 'update_reviews_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Reviews!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateReviewsByIdResponse
+    inputTypeName: UpdateReviewsByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_reviews_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateReviewsByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateReviewsById
+  outputType: UpdateReviewsByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: ReviewsBoolExp
+      description: Update permission post-condition predicate over the 'reviews' collection
+    - name: preCheck
+      type: ReviewsBoolExp
+      description: Update permission pre-condition predicate over the 'reviews' collection
+    - name: updateColumns
+      type: UpdateReviewsByIdUpdateColumns!
+  source:
+    dataConnectorName: my_connector
+    dataConnectorCommand:
+      procedure: update_reviews_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateReviewsById
+    rootFieldKind: Mutation
+  description: Update any row on the 'reviews' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateReviewsById
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,177 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnManufacturersId
+  description: Update the 'id' column in the 'manufacturers' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnManufacturersId
+    inputTypeName: UpdateColumnManufacturersIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_manufacturers_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnManufacturersId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnManufacturersName
+  description: Update the 'name' column in the 'manufacturers' collection
+  fields:
+    - name: set
+      type: String_1!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnManufacturersName
+    inputTypeName: UpdateColumnManufacturersNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_column_manufacturers_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnManufacturersName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateManufacturersByIdUpdateColumns
+  description: Update the columns of the 'manufacturers' collection
+  fields:
+    - name: id
+      type: UpdateColumnManufacturersId
+      description: Update the 'id' column in the 'manufacturers' collection.
+    - name: name
+      type: UpdateColumnManufacturersName
+      description: Update the 'name' column in the 'manufacturers' collection.
+  graphql:
+    typeName: UpdateManufacturersByIdUpdateColumns
+    inputTypeName: UpdateManufacturersByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_manufacturers_by_id_update_columns
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateManufacturersByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateManufacturersByIdResponse
+  description: Responses from the 'update_manufacturers_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Manufacturers!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateManufacturersByIdResponse
+    inputTypeName: UpdateManufacturersByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: update_manufacturers_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateManufacturersByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateManufacturersById
+  outputType: UpdateManufacturersByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: ManufacturersBoolExp
+      description: Update permission post-condition predicate over the 'manufacturers'
+        collection
+    - name: preCheck
+      type: ManufacturersBoolExp
+      description: Update permission pre-condition predicate over the 'manufacturers'
+        collection
+    - name: updateColumns
+      type: UpdateManufacturersByIdUpdateColumns!
+  source:
+    dataConnectorName: my_connector
+    dataConnectorCommand:
+      procedure: update_manufacturers_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateManufacturersById
+    rootFieldKind: Mutation
+  description: Update any row on the 'manufacturers' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateManufacturersById
+  permissions:
+    - role: admin
+      allowExecution: true
+

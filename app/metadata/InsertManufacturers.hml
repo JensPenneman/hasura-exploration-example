@@ -1,0 +1,101 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertManufacturersObject
+  fields:
+    - name: id
+      type: Uuid
+    - name: name
+      type: String_1!
+  graphql:
+    typeName: InsertManufacturersObject
+    inputTypeName: InsertManufacturersObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_manufacturers_object
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertManufacturersObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertManufacturersResponse
+  description: Responses from the 'insert_manufacturers' procedure
+  fields:
+    - name: affectedRows
+      type: Int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Manufacturers!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertManufacturersResponse
+    inputTypeName: InsertManufacturersResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_manufacturers_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertManufacturersResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertManufacturers
+  outputType: InsertManufacturersResponse!
+  arguments:
+    - name: objects
+      type: "[InsertManufacturersObject!]!"
+    - name: postCheck
+      type: ManufacturersBoolExp
+      description: Insert permission predicate over the 'manufacturers' collection
+  source:
+    dataConnectorName: my_connector
+    dataConnectorCommand:
+      procedure: insert_manufacturers
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertManufacturers
+    rootFieldKind: Mutation
+  description: Insert into the manufacturers table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertManufacturers
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,101 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertCategoriesObject
+  fields:
+    - name: id
+      type: Uuid
+    - name: name
+      type: String_1!
+  graphql:
+    typeName: InsertCategoriesObject
+    inputTypeName: InsertCategoriesObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_categories_object
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertCategoriesObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertCategoriesResponse
+  description: Responses from the 'insert_categories' procedure
+  fields:
+    - name: affectedRows
+      type: Int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Categories!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertCategoriesResponse
+    inputTypeName: InsertCategoriesResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_categories_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertCategoriesResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertCategories
+  outputType: InsertCategoriesResponse!
+  arguments:
+    - name: objects
+      type: "[InsertCategoriesObject!]!"
+    - name: postCheck
+      type: CategoriesBoolExp
+      description: Insert permission predicate over the 'categories' collection
+  source:
+    dataConnectorName: my_connector
+    dataConnectorCommand:
+      procedure: insert_categories
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertCategories
+    rootFieldKind: Mutation
+  description: Insert into the categories table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertCategories
+  permissions:
+    - role: admin
+      allowExecution: true
+

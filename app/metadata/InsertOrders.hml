@@ -1,0 +1,144 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrdersObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: deliveryDate
+      type: Timestamptz
+    - name: id
+      type: Uuid
+    - name: isReviewed
+      type: Boolean_1
+    - name: productId
+      type: Uuid!
+    - name: status
+      type: String_1!
+    - name: updatedAt
+      type: Timestamptz
+    - name: userId
+      type: Uuid!
+  graphql:
+    typeName: InsertOrdersObject
+    inputTypeName: InsertOrdersObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_orders_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        deliveryDate:
+          column:
+            name: delivery_date
+        id:
+          column:
+            name: id
+        isReviewed:
+          column:
+            name: is_reviewed
+        productId:
+          column:
+            name: product_id
+        status:
+          column:
+            name: status
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrdersObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - deliveryDate
+          - id
+          - isReviewed
+          - productId
+          - status
+          - updatedAt
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrdersResponse
+  description: Responses from the 'insert_orders' procedure
+  fields:
+    - name: affectedRows
+      type: Int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Orders!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrdersResponse
+    inputTypeName: InsertOrdersResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_orders_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrdersResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrders
+  outputType: InsertOrdersResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrdersObject!]!"
+    - name: postCheck
+      type: OrdersBoolExp
+      description: Insert permission predicate over the 'orders' collection
+  source:
+    dataConnectorName: my_connector
+    dataConnectorCommand:
+      procedure: insert_orders
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrders
+    rootFieldKind: Mutation
+  description: Insert into the orders table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrders
+  permissions:
+    - role: admin
+      allowExecution: true
+

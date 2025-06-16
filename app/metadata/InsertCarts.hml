@@ -1,0 +1,132 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertCartsObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid
+    - name: isComplete
+      type: Boolean_1
+    - name: isReminderSent
+      type: Boolean_1
+    - name: updatedAt
+      type: Timestamptz
+    - name: userId
+      type: Uuid!
+  graphql:
+    typeName: InsertCartsObject
+    inputTypeName: InsertCartsObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_carts_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        isComplete:
+          column:
+            name: is_complete
+        isReminderSent:
+          column:
+            name: is_reminder_sent
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertCartsObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - isComplete
+          - isReminderSent
+          - updatedAt
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertCartsResponse
+  description: Responses from the 'insert_carts' procedure
+  fields:
+    - name: affectedRows
+      type: Int32!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Carts!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertCartsResponse
+    inputTypeName: InsertCartsResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: my_connector
+      dataConnectorObjectType: insert_carts_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertCartsResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertCarts
+  outputType: InsertCartsResponse!
+  arguments:
+    - name: objects
+      type: "[InsertCartsObject!]!"
+    - name: postCheck
+      type: CartsBoolExp
+      description: Insert permission predicate over the 'carts' collection
+  source:
+    dataConnectorName: my_connector
+    dataConnectorCommand:
+      procedure: insert_carts
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertCarts
+    rootFieldKind: Mutation
+  description: Insert into the carts table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertCarts
+  permissions:
+    - role: admin
+      allowExecution: true
+
